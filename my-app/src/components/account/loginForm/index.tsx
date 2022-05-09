@@ -56,8 +56,11 @@ const LoginForm: React.FC<React.PropsWithChildren<any>> = ({ onChangeForm }) => 
   };
   const handleSubmit = () => {
     const user = new UserService();
-    user.signin(values, onSuccess, onError);
-    dispatch(showLoading(true));
+    if(values.email && values.password) {
+      user.signin(values, onSuccess, onError);
+      dispatch(showLoading(true));
+    }
+  
   };
 
   const handleOpenRegisterForm = () => {
@@ -69,8 +72,9 @@ const LoginForm: React.FC<React.PropsWithChildren<any>> = ({ onChangeForm }) => 
     const user = new UserService();
     user.signInWithGoogle().then(() => {
       dispatch(openFormAuth({type: 'login', value:false}));
+      dispatch(showLoading(true));
     });
-    dispatch(showLoading(true));
+    
   };
   return (
     <React.Fragment>
