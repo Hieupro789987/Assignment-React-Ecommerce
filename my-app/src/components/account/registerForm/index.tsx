@@ -1,9 +1,7 @@
 import { Check, Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
-  Backdrop,
   Box,
-  CircularProgress,
   IconButton,
   InputAdornment,
   Link,
@@ -12,20 +10,19 @@ import {
   Typography,
 } from '@mui/material';
 
-import { errorInfo, useForm } from 'hooks/form';
+import { errorRegister, useForm } from 'hooks/form';
 import UserService from 'queries/user';
 
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { useAppDispatch } from 'stores/hooks';
-import { showToast } from 'stores/reducers/actionReducer';
-import { IUserSignUp } from 'types/user';
+import { showLoading, showToast } from 'stores/reducers/actionReducer';
 import { LoginWrapper } from '../styled';
 
 const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
   const [show, setShow] = React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
+
   const dispatch = useAppDispatch();
-  const { handleChange, values, isError, errors } = useForm(errorInfo);
+  const { handleChange, values, isError, errors } = useForm(errorRegister);
 
   const handleClickShowPassword = () => {
     setShow(!show);
@@ -42,7 +39,7 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
         message: message,
       })
     );
-    setLoading(false);
+    dispatch(showLoading(false));
   };
   const onError = (message: string) => {
     dispatch(
@@ -52,15 +49,14 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
         message: message,
       })
     );
-    setLoading(false);
+    dispatch(showLoading(false));
   };
 
   const handleSubmitRegister = () => {
     if (!isError()) {
       const user = new UserService();
       user.signup(values, onSuccess, onError);
-
-      setLoading(true);
+      dispatch(showLoading(true));
     }
   };
 
@@ -109,7 +105,7 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
               fullWidth
               required
               helperText={errors.phoneNumber}
-              error={errors.phoneNumber? true : false}
+              error={errors.phoneNumber ? true : false}
               type="number"
             />
           </Stack>
@@ -125,7 +121,7 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
             required
             sx={{ mb: 2 }}
             helperText={errors.address}
-            error={errors.address? true : false}
+            error={errors.address ? true : false}
           />
           <TextField
             id="email"
@@ -139,7 +135,7 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
             required
             sx={{ mb: 2 }}
             helperText={errors.email}
-            error={errors.email? true : false}
+            error={errors.email ? true : false}
           />
 
           <TextField
@@ -155,7 +151,7 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
             sx={{ mb: 2, pr: 0 }}
             type={show ? '' : 'password'}
             helperText={errors.password}
-            error={errors.password? true : false}
+            error={errors.password ? true : false}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -182,7 +178,7 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
             required
             sx={{ mb: 2 }}
             helperText={errors.confirmPassword}
-            error={errors.confirmPassword? true : false}
+            error={errors.confirmPassword ? true : false}
           />
 
           <LoadingButton
@@ -216,9 +212,6 @@ const RegisterForm: React.FC<any> = ({ onChangeLogin }) => {
           </Typography>
         </Box>
       </LoginWrapper>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
     </React.Fragment>
   );
 };

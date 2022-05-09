@@ -10,7 +10,7 @@ const checkEmail = (email: string): boolean => {
   return regex.test(email);
 };
 
-export const errorInfo = (values: any) => {
+export const errorRegister = (values: any) => {
   const errors: IObject = {};
 
   if (!values.username.trim()) {
@@ -44,6 +44,25 @@ export const errorInfo = (values: any) => {
 
   return errors;
 };
+export const errorLogin = (values: any) => {
+  const errors: IObject = {};
+
+  if (!values.email) {
+    errors.email = 'không được để trống';
+  } else if (!checkEmail(values.email)) {
+    errors.email = 'email không hợp lệ';
+  }
+
+  if (!values.password) {
+    errors.password = 'không được để trống';
+  } else if (values.password.length < 6) {
+    errors.password = 'Mật khẩu cần ít nhất 6 kí tự';
+  }
+
+
+  return errors;
+};
+
 
 export const useForm = (data: any) => {
   const [values, setValues] = useState<any>({

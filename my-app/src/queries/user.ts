@@ -54,22 +54,19 @@ class UserService extends QueryData {
       email: string;
       password: string;
     },
-    onSuccess = (message: string) => {},
+
     onError = (message: string) => {}
   ) => {
     await signin(values.email, values.password)
-      .then((res) => {
-        onSuccess('Đăng nhập thành công');
-      })
       .catch((e: Error) => {
-        if (e.message.includes('auth/wrong-password')) {
-          onError('Email hoặc password không hợp lệ!');
-        }
+        
+        onError('Email hoặc password không hợp lệ!');
       });
   };
 
   logout = async () => {
     signout();
+    
   };
 
   getUser = async (id: string) => {

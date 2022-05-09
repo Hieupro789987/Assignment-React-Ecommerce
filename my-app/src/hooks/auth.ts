@@ -32,12 +32,12 @@ export const useStatusAuth = () => {
             })
           );
           dispatch(showLoading(false));
-          dispatch(openFormAuth({ type: 'login', value: false }));
+          dispatch(openFormAuth({type:'login', value: false}));
 
           setCurrentUser(res);
         });
       } else {
-        dispatch(showLoading(false));
+        setCurrentUser(null);
         dispatch(
           updateInfomation({
             username: '',

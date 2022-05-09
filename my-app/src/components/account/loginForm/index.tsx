@@ -19,20 +19,17 @@ import UserService from 'queries/user';
 import { LoginWrapper } from '../styled';
 import { useAppDispatch } from 'stores/hooks';
 import { openFormAuth, showLoading, showToast } from 'stores/reducers/actionReducer';
+import { useForm, errorLogin } from 'hooks/form';
 
 const LoginForm: React.FC<React.PropsWithChildren<any>> = ({ onChangeForm }) => {
   const [show, setShow] = React.useState<boolean>(false);
-  const [values, setValues] = React.useState<any>({
-    email: '',
-    password: '',
-  });
+
+  const { handleChange, values, isError, errors } = useForm(errorLogin);
 
   const dispatch = useAppDispatch();
 
-  const onSuccess = (message: string) => {
-
-  };
   const onError = (message: string) => {
+    console.log("alo alo alo");
     dispatch(
       showToast({
         active: true,
@@ -46,21 +43,13 @@ const LoginForm: React.FC<React.PropsWithChildren<any>> = ({ onChangeForm }) => 
   const handleClickShowPassword = () => {
     setShow(!show);
   };
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
 
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
   const handleSubmit = () => {
-    const user = new UserService();
-    if(values.email && values.password) {
-      user.signin(values, onSuccess, onError);
+    if (!isError()) {
+      const user = new UserService();
+      user.signin(values, onError);
       dispatch(showLoading(true));
     }
-  
   };
 
   const handleOpenRegisterForm = () => {
@@ -71,10 +60,9 @@ const LoginForm: React.FC<React.PropsWithChildren<any>> = ({ onChangeForm }) => 
   const handleLoginWithGoole = () => {
     const user = new UserService();
     user.signInWithGoogle().then(() => {
-      dispatch(openFormAuth({type: 'login', value:false}));
+      dispatch(openFormAuth({ type: 'login', value: false }));
       dispatch(showLoading(true));
     });
-    
   };
   return (
     <React.Fragment>
@@ -106,6 +94,8 @@ const LoginForm: React.FC<React.PropsWithChildren<any>> = ({ onChangeForm }) => 
             fullWidth
             required
             sx={{ mb: 2 }}
+            helperText={errors.email}
+            error={errors.email ? true : false}
           />
 
           <TextField
@@ -120,6 +110,8 @@ const LoginForm: React.FC<React.PropsWithChildren<any>> = ({ onChangeForm }) => 
             required
             sx={{ mb: 2, pr: 0 }}
             type={show ? '' : 'password'}
+            helperText={errors.password}
+            error={errors.password ? true : false}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
