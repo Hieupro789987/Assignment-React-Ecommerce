@@ -2,7 +2,6 @@ import { CssBaseline } from '@mui/material';
 
 import ShowProduct from 'components/product/product_show';
 import ToastMessage from 'components/toast';
-import React from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from 'routes/PrivateRoute';

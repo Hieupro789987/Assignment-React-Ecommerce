@@ -18,7 +18,7 @@ import Menu from 'components/MenuMuti/Menu';
 import Layout from '..';
 import CheckBoxs from 'components/checkBox';
 
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import ProductService from 'queries/product';
 import BrandsService from 'queries/brands';
@@ -31,21 +31,21 @@ import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'stores/hooks';
 import { passCateID } from 'stores/reducers/productSlice';
 
-const VIEW_DISPLAY = 9;
+const VIEW_DISPLAY = 6;
 
-const ProductPage: React.FC<any> = () => {
+const ProductPage: FC<any> = () => {
   const location = useLocation();
   const id = useAppSelector((state) => state.product.cateID);
   const dispatch = useAppDispatch();
 
-  const [page, setPage] = React.useState<number>(1);
-  const [products, setProducts] = React.useState<IProduct[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
-  const [brands, setBrands] = React.useState<any>([]);
-  const [cates, setCates] = React.useState<any>([]);
-  const [count, setCount] = React.useState<number>(0);
-  const [options, setOptions] = React.useState<any>({});
-  const [value, setValue] = React.useState<string>('');
+  const [brands, setBrands] = useState<any>([]);
+  const [cates, setCates] = useState<any>([]);
+  const [count, setCount] = useState<number>(0);
+  const [options, setOptions] = useState<any>({});
+  const [value, setValue] = useState<string>('');
 
   const handleChangePage = (value: number) => {
     setPage(value);
@@ -74,7 +74,7 @@ const ProductPage: React.FC<any> = () => {
     });
   };
 
-  React.useEffect(() => {
+ useEffect(() => {
     const brand = new BrandsService();
     brand.getAllBrands().then((item) => setBrands((brands: any) => [...brands, ...item]));
     const cate = new CategoriesService();
@@ -83,7 +83,7 @@ const ProductPage: React.FC<any> = () => {
     });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (location.pathname === '/sanpham') {
       dispatch(passCateID(null));
     }
@@ -122,6 +122,9 @@ const ProductPage: React.FC<any> = () => {
     getProduct();
   }, [dispatch, id, location.pathname, location.search, options, page]);
 
+  useEffect(() =>{
+    window.scrollTo(0, 0);
+  }, [page,options])
   return (
     <Layout>
       <Paper elevation={0}>
@@ -188,7 +191,10 @@ const ProductPage: React.FC<any> = () => {
           sm={9}
           sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
         >
-          <ShowProduct data={products} col={4} />
+          {
+            products.length <= 0 ? "Không tìm thấy sản phẩm" :  <ShowProduct data={products} col={4} />
+          }
+         
 
           {products.length > 0 && (
             <Stack direction="row" justifyContent="center" mt={1}>

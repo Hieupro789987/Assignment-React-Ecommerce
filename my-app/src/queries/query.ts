@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 
-class QueryData {
+abstract class QueryData {
   async fetchData(feildPath: CollectionReference<any>, ...queryConstraints: QueryConstraint[]) {
     const list = [];
     const ref = feildPath;

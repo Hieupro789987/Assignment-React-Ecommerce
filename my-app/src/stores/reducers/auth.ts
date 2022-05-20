@@ -21,7 +21,6 @@ export const authSlice = createSlice({
     },
     editInfomationTmp: (state = initialState, action: PayloadAction<IIformmationEdit>) => {
         const {username, phoneNumber, address} = action.payload;
-
         state.username = username;
         state.phoneNumber = phoneNumber;
         state.address = address;

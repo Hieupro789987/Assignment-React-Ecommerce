@@ -2,16 +2,16 @@ import { queryFirestore } from 'utils/db';
 import QueryData from './query';
 
 class BrandsService extends QueryData {
-  brandList: any[] = [];
-
+ 
   async getAllBrands() {
+    let list: any[] = [];
     await super.fetchData(queryFirestore.brands).then((res) => {
       for (const doc of res) {
         const temp = doc;
-        this.brandList.push(temp);
+        list.push(temp);
       }
     });
-    return this.brandList;
+    return list;
   }
 
   getBrandByID = async (brandID: string) => {

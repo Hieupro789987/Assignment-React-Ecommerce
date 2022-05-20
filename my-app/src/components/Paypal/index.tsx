@@ -6,11 +6,10 @@ import { useAppSelector } from 'stores/hooks';
 
 const Paypal: React.FC<any> = ({ func }) => {
   const { totalPrices } = useAppSelector((state) => state.cart);
-  const handleSuccess =  () => {
+  const handleSuccess = () => {
     func(true);
-  }
+  };
   return (
-
     <PayPalButtons
       style={{ color: 'silver', layout: 'horizontal', height: 48, tagline: false, shape: 'pill' }}
       createOrder={(data: any, actions: any) => {
@@ -31,8 +30,8 @@ const Paypal: React.FC<any> = ({ func }) => {
 
         handleSuccess();
       }}
-      onError = {(err: any) => {
-          console.log(err);
+      onError={(err: any) => {
+        console.log(err);
       }}
     />
   );

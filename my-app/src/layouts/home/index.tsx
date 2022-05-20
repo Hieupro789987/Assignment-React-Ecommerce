@@ -1,5 +1,5 @@
 import { Box, Grid, Skeleton, Stack, Typography } from '@mui/material';
-
+import React from 'react';
 import Sidebar from 'components/Sidebar';
 import Layout from '..';
 import Menu from 'components/MenuMuti/Menu';
@@ -8,14 +8,9 @@ import { BannerData, BannerSales } from 'constant/banner';
 import { Autoplay, EffectCreative, Pagination } from 'swiper';
 import 'swiper/css/effect-creative';
 import 'swiper/css/pagination';
-
 import Carousel from 'components/swiper/carousel';
 
-import React from 'react';
 import CategoriesService from 'queries/categories';
-
-import banner3 from 'assets/images/3.jpg';
-import banner4 from 'assets/images/4.jpg';
 import ProductService from 'queries/product';
 import { IProduct } from 'types/product';
 import ProductItem from 'components/product/product_item';
@@ -40,7 +35,7 @@ const HomePage: React.FC<any> = () => {
 
   return (
     <Layout>
-      <Grid container spacing={2} >
+      <Grid container spacing={2} sx={{height:"460px"}}>
         <Grid item xs={2.5} sx={{ display: { xs: 'none', md: 'inline' } }}>
           <Sidebar>
             {cates.length > 0 ? (
@@ -50,18 +45,10 @@ const HomePage: React.FC<any> = () => {
             )}
           </Sidebar>
         </Grid>
-        <Grid item xs={12} md={7.5}>
-          <Slider data={BannerData} module={[EffectCreative, Pagination, Autoplay]} />
+        <Grid item xs={12} md={9.5} sx={{height:"100%"}}>
+          <Slider  data={BannerData} module={[EffectCreative, Pagination, Autoplay]} />
         </Grid>
 
-        <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Stack direction="column" justifyContent="space-between" height="100%">
-            <Box>
-              <img src={banner3} alt="banner" />
-              <img src={banner4} alt="banner" />
-            </Box>
-          </Stack>
-        </Grid>
       </Grid>
       <Box sx={{ mt: 5 }}>
         <Typography variant="h2" mb={2}>

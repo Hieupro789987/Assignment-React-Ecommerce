@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import BreadcrumbComp from 'components/Breadcrumb';
 import Footer from 'components/Footer';
 import Navbar from 'components/Navbar/navbar';
-
+import { FC, useEffect } from 'react';
 
 import { useLocation } from 'react-router-dom';
 
@@ -18,8 +18,12 @@ const ContainerStyled = styled('div')(({ theme }) => ({
   },
 }));
 
-const Layout: React.FC<any> = (props) => {
+const Layout: FC<any> = (props) => {
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <>
@@ -51,7 +55,6 @@ const Layout: React.FC<any> = (props) => {
         <Footer />
       </Box>
 
-     
     </>
   );
 };
