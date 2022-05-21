@@ -8,7 +8,7 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    passCateID: (state = initialState, action: PayloadAction<string | null>) => {
+    passCateID: (state, action: PayloadAction<string | null>) => {
       let value = action.payload;
       if(value) {
         sessionStorage.setItem('id', value);

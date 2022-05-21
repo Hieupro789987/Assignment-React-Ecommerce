@@ -16,10 +16,10 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateInfomation: (state = initialState, action: PayloadAction<InfomationCustomer>) => {
+    updateInfomation: (state, action: PayloadAction<InfomationCustomer>) => {
       Object.assign(state, action.payload);
     },
-    editInfomationTmp: (state = initialState, action: PayloadAction<IIformmationEdit>) => {
+    editInfomationTmp: (state, action: PayloadAction<IIformmationEdit>) => {
         const {username, phoneNumber, address} = action.payload;
         state.username = username;
         state.phoneNumber = phoneNumber;

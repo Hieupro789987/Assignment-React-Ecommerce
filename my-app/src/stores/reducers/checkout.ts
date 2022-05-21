@@ -9,7 +9,7 @@ export const checkoutSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-        paymentMethod : (state= initialState, action: PayloadAction<string>) => {
+        paymentMethod : (state, action: PayloadAction<string>) => {
             state.payment = action.payload;
         },
  

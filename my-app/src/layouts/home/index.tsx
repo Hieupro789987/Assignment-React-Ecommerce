@@ -94,7 +94,6 @@ const HomePage: React.FC<any> = () => {
             ))}
         </Grid>
       </Box>
-      ;
     </Layout>
   );
 };

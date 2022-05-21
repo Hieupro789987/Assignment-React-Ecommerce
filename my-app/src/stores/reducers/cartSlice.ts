@@ -23,7 +23,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    updateCart: (state = initialState) => {
+    updateCart: (state) => {
       const newList = state.cart;
       state.count = newList.length;
       let sumA = 0;
@@ -35,7 +35,7 @@ export const cartSlice = createSlice({
       });
       localStorage.setItem('cart', JSON.stringify(state.cart));
     },
-    addToCart: (state = initialState, action: PayloadAction<ICartProduct>) => {
+    addToCart: (state, action: PayloadAction<ICartProduct>) => {
       let flag = false;
       const product = action.payload;
       if (state.cart.length >= 0) {
@@ -52,7 +52,7 @@ export const cartSlice = createSlice({
         state.cart.push(product);
       }
     },
-    deleteProduct: (state = initialState, action: PayloadAction<string>) => {
+    deleteProduct: (state, action: PayloadAction<string>) => {
       const id = action.payload;
       state.cart = state.cart.filter((item: ICartProduct) => item.id != id);
       localStorage.setItem('cart', JSON.stringify(state.cart));
@@ -61,7 +61,7 @@ export const cartSlice = createSlice({
       state.totalPrices = 0;
     },
     updateAmounts: (
-      state = initialState,
+      state,
       action: PayloadAction<{ id: string; amount: number }>
     ) => {
       const { id, amount } = action.payload;
@@ -71,7 +71,7 @@ export const cartSlice = createSlice({
         prod.amounts = amount;
       }
     },
-    clearCart: (state = initialState) => {
+    clearCart: (state) => {
       localStorage.removeItem('cart');
       state.cart = [];
       state.count = 0;

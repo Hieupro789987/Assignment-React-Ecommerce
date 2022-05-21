@@ -48,12 +48,12 @@ export const actionSlice = createSlice({
       const { type, value } = action.payload;
       Object.assign(state.openForm, {[type]: value });
     },
-    showToast: (state = initialState, action: PayloadAction<IToast>) => {
+    showToast: (state, action: PayloadAction<IToast>) => {
       const value = action.payload;
       state.toast = { ...value };
     },
 
-    showLoading: (state = initialState, action: PayloadAction<boolean>) => {
+    showLoading: (state, action: PayloadAction<boolean>) => {
       const value = action.payload;
       state.loading = value;
     },
